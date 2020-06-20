@@ -4,10 +4,11 @@
   "browser_action" field in manifest.json contains the "default_popup" key with
   value "popup.html".
 -->
-<html ng-app="letras">
+<html>
   <head>
     <meta charset="utf-8" />
     <title>Getting Started Extension's Popup</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <style>
       body {
         font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
@@ -34,51 +35,40 @@
       - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
     -->
   </head>
-  <body ng-controller="ProcuraLetrasController">
+  <body>
+    <div id="app">
     <div class="container">
-      <div ng-show="!contemLetra">
-        <h1 class="text-center">Busca Letra</h1>
+      <div v-if="!contemLetra">
+        <h1 class="text-center">Procurar por musica</h1>
         <div class="row">
           <div class="col text-center">
             <form class="form" name="musicaForm">
               <div class="row">
                 <div class="col">
                   <div class="form-group">
-                    <label for="staticEmail2" class="sr-only">Artista</label>
-                    <input
+                    <label for="staticEmail2" class="sr-only">Música</label>
+                    <input                      
                       type="text"
                       class="form-control"
-                      ng-model="artista"
-                      id="artista"
-                      placeholder="Artista"
-                    />
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="form-group">
-                    <label for="inputPassword2" class="sr-only">Música</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      ng-model="musica"
+                      v-model="musica"
                       id="musica"
                       placeholder="Música"
                     />
                   </div>
-                </div>
+                </div>               
               </div>
             </form>
           </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
           <div class="col text-center">
-            <button class="btn btn-primary" ng-click="procuraLetra()" style="margin-bottom: 10px;">
+            <button class="btn btn-primary" @click="procuraLetra()" style="margin-bottom: 10px;">
               Procurar letra
             </button>
           </div>
-        </div>
+        </div> -->
       </div>
-      <div style="margin-top: 10px;" ng-show="contemLetra">
+      <div style="margin-top: 10px;" v-if="contemLetra">
         <h1>{{ resposta.artista }} - {{ resposta.musica }}</h1>
         <table>
           <thead>
@@ -88,7 +78,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="verso in letra">              
+            <tr v-for="verso in letra">              
               <td>{{ verso.ingles }}</td>
               <td>{{ verso.portugues }}</td>
             </tr>
@@ -97,13 +87,12 @@
 
         <div style="margin: 10px 0;" class="row">
           <div class="col text-center">
-            <button class="btn btn-primary" ng-click="voltar()">Voltar</button>
+            <button class="btn btn-primary" @click="voltar()">Voltar</button>
           </div>
         </div>
       </div>
     </div>
-
-    <script src="node_modules/angular/angular.min.js"></script>
+  </div>    
     <script src="popup.js"></script>
   </body>
 </html>
