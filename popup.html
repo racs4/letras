@@ -8,7 +8,6 @@
   <head>
     <meta charset="utf-8" />
     <title>Letras</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <style>
       body {
         font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
@@ -38,7 +37,7 @@
   <body>
     <div id="app">
     <div class="container">
-      <div v-if="!contemLetra">
+      <div>
         <h1 class="text-center">Procurar por musica</h1>
         <div class="row">
           <div class="col text-center">
@@ -47,7 +46,7 @@
                 <div class="col">
                   <div class="form-group">
                     <label for="staticEmail2" class="sr-only">Música</label>
-                    <input                      
+                    <input
                       type="text"
                       class="form-control"
                       v-model="musica"
@@ -55,13 +54,13 @@
                       placeholder="Música"
                     />
                   </div>
-                </div>               
+                </div>
               </div>
             </form>
-          </div>          
+          </div>
         </div>
         <div class="list-group">
-          <button v-for="result in resultList" type="button" class="list-group-item list-group-item-action">{{result.band}} - {{result.title}}</button>          
+          <button v-for="result in resultList" :key="result.id" @click="procuraLetra(result.id)" type="button" class="list-group-item list-group-item-action">{{result.band}} - {{result.title}}</button>
         </div>
         <!-- <div class="row">
           <div class="col text-center">
@@ -72,18 +71,18 @@
         </div> -->
       </div>
       <div style="margin-top: 10px;" v-if="contemLetra">
-        <h1>{{ resposta.artista }} - {{ resposta.musica }}</h1>
+        <h3 class="text-center">{{ nomeArtista }} - {{ nomeMusica }}</h3>
         <table>
           <thead>
-            <tr>
-              <th class="pull-right">Inglês</th>
-              <th class="pull-left">Português</th>
+            <tr class="row">
+              <th class="col text-center">Inglês</th>
+              <th class="col text-center">Português</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="verso in letra">              
-              <td>{{ verso.ingles }}</td>
-              <td>{{ verso.portugues }}</td>
+            <tr class="row" v-for="verso in letra">
+              <td class="col">{{ verso.ingles }}</td>
+              <td class="col pr-1">{{ verso.portugues }}</td>
             </tr>
           </tbody>
         </table>
@@ -95,7 +94,8 @@
         </div>
       </div>
     </div>
-  </div>    
+  </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="popup.js"></script>
   </body>
 </html>

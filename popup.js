@@ -1,17 +1,18 @@
 const API_URL_SEARCH = "https://api.vagalume.com.br/search.excerpt?apikey=e5d74f1fae750d34bd8d600fd164457b";
+const API_URL_MUSIC = "https://api.vagalume.com.br/search.php?apikey=660a4395f992ff67786584e238f501aa";
 const LIMIT = 5;
 
 function loadDoc(url, cFunction) {
-    var xhttp;
-    xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        cFunction(this);
-      }
-    };
-    xhttp.open("GET", url, true);
-    xhttp.send();
-  }
+  var xhttp;
+  xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      cFunction(this);
+    }
+  };
+  xhttp.open("GET", url, true);
+  xhttp.send();
+}
 
 
 new Vue({
@@ -19,23 +20,56 @@ new Vue({
     data() {
         return {
             contemLetra: false,
-            letra: [],
             musica: 'Time',
             artista: 'Pink Floyd',
+            nomeMusica: '',
+            nomeArtista: '',
             resposta: undefined,
+            letraInglesString: "",
+            letraPortString: "",
         }
     },
     methods: {
         voltar() {
             this.contemLetra = !this.contemLetra;
         },
-        procuraLetra() {
-            this.contemLetra = !this.contemLetra;
+        procuraLetra(id) {
+          let stringBusca = `${API_URL_MUSIC}&musid=${id}`;
+          this.contemLetra = true;
+          this.musica = '';
+          this.letraInglesString = "";
+          this.letraPortString = "";
+          loadDoc(stringBusca, (data) => {
+            let response = JSON.parse(data.responseText);
+            this.letraInglesString = response.mus[0].text;
+            this.letraPortString = response.mus[0].translate[0].text;
+            this.nomeMusica = response.mus[0].name;
+            this.nomeArtista = response.art.name;
+          });
         },
     },
     computed: {
         resultList() {
             return this.resposta ? this.resposta.response.docs : [];
+        },
+        letra() {
+          let result = [];
+          let arrayPort = this.letraPortString.split('\n');
+          let arrayIng = this.letraInglesString.split('\n');
+
+          if (arrayPort[0][0] == '[') {
+            arrayPort.shift();
+          }
+
+          while(arrayPort[0] == "") {
+            arrayPort.shift();
+          }
+
+          for (let i = 0; i < arrayIng.length; i++) {
+            result.push({ ingles: arrayIng[i], portugues: arrayPort[i] });
+          }
+
+          return result;
         }
     },
     watch: {
