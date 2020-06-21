@@ -8,11 +8,46 @@
   <head>
     <meta charset="utf-8" />
     <title>Letras</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="node_modules/bootstrap/dist/css/bootstrap.min.css"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
     <style>
       body {
-        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+        font-family: 'Amatic SC', cursive;;
         font-size: 100%;
         width: 700px;
+        background-color: black;
+        color: white;
+      }
+      ::-webkit-input-placeholder {
+        color: white;
+      }
+
+      :-moz-placeholder { /* Firefox 18- */
+        color: white;
+      }
+
+      ::-moz-placeholder {  /* Firefox 19+ */
+        color: white;
+      }
+
+      :-ms-input-placeholder {
+        color: white;
+      }
+      .dark-mode {
+        background-color: black;
+        color: white;
+      }
+      .dark-mode:focus {
+        background-color: black;
+        color: white;
+      }
+      .dark-mode:hover {
+        background-color: rgb(44, 36, 36);
+        color: white;
       }
       #status {
         /* avoid an excessively wide status text */
@@ -22,11 +57,7 @@
         /*max-width: 400px;*/
       }
     </style>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="node_modules/bootstrap/dist/css/bootstrap.min.css"
-    />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <!--
       - JavaScript and HTML must be in separate files: see our Content Security
       - Policy documentation[1] for details and explanation.
@@ -38,7 +69,7 @@
     <div id="app">
     <div class="container">
       <div>
-        <h1 class="text-center">Procurar por musica</h1>
+        <h1 class="text-center" style="font-family: 'Amatic SC', cursive;">Procure por uma música</h1>
         <div class="row">
           <div class="col text-center">
             <form class="form" name="musicaForm">
@@ -48,7 +79,7 @@
                     <label for="staticEmail2" class="sr-only">Música</label>
                     <input
                       type="text"
-                      class="form-control"
+                      class="form-control dark-mode"
                       v-model="musica"
                       id="musica"
                       placeholder="Música"
@@ -60,7 +91,7 @@
           </div>
         </div>
         <div class="list-group">
-          <button v-for="result in resultList" :key="result.id" @click="procuraLetra(result.id)" type="button" class="list-group-item list-group-item-action">{{result.band}} - {{result.title}}</button>
+          <button v-for="result in resultList" :key="result.id" @click="procuraLetra(result.id)" type="button" class="list-group-item list-group-item-action dark-mode">{{result.band}} - {{result.title}}</button>
         </div>
         <!-- <div class="row">
           <div class="col text-center">
@@ -73,12 +104,12 @@
       <div style="margin-top: 10px;" v-if="contemLetra">
         <h3 class="text-center">{{ nomeArtista }} - {{ nomeMusica }}</h3>
         <table>
-          <thead>
+          <!-- <thead>
             <tr class="row">
               <th class="col text-center">Inglês</th>
               <th class="col text-center">Português</th>
             </tr>
-          </thead>
+          </thead> -->
           <tbody>
             <tr class="row" v-for="verso in letra">
               <td class="col">{{ verso.ingles }}</td>
@@ -95,7 +126,6 @@
       </div>
     </div>
   </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="popup.js"></script>
   </body>
 </html>
