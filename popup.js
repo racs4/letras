@@ -26,6 +26,7 @@ new Vue({
             resposta: undefined,
             letraInglesString: "",
             letraPortString: "",
+            hasTranslation: false,
         }
     },
     methods: {
@@ -40,10 +41,16 @@ new Vue({
           this.letraPortString = "";
           loadDoc(stringBusca, (data) => {
             let response = JSON.parse(data.responseText);
-            this.letraInglesString = response.mus[0].text;
-            this.letraPortString = response.mus[0].translate[0].text;
+            console.log(response);
             this.nomeMusica = response.mus[0].name;
             this.nomeArtista = response.art.name;
+            this.letraInglesString = response.mus[0].text;
+            if (response.mus[0].translate) {
+              this.hasTranslation = true;
+              this.letraPortString = response.mus[0].translate[0].text;
+            } else {
+              this.hasTranslation = false;
+            }
           });
         },
     },
