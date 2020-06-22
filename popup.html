@@ -22,6 +22,10 @@
         background-color: black;
         color: white;
       }
+      .font-letra {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 1rem;
+      }
       ::-webkit-input-placeholder {
         color: white;
       }
@@ -75,7 +79,7 @@
             <form class="form" name="musicaForm">
               <div class="row">
                 <div class="col">
-                  <div class="form-group">
+                  <div class="form-group mb-0">
                     <label for="staticEmail2" class="sr-only">Música</label>
                     <input
                       type="text"
@@ -90,7 +94,7 @@
             </form>
           </div>
         </div>
-        <div class="list-group">
+        <div class="list-group mb-3">
           <button v-for="result in resultList" :key="result.id" @click="procuraLetra(result.id)" type="button" class="list-group-item list-group-item-action dark-mode">{{result.band}} - {{result.title}}</button>
         </div>
         <!-- <div class="row">
@@ -110,7 +114,7 @@
               <th class="col text-center">Português</th>
             </tr>
           </thead> -->
-          <tbody>
+          <tbody class="font-letra">
             <tr class="row" v-for="verso in letra">
               <td class="col">{{ verso.ingles }}</td>
               <td class="col pr-1">{{ verso.portugues }}</td>
@@ -120,7 +124,7 @@
 
         <div style="margin: 10px 0;" class="row">
           <div class="col text-center">
-            <button class="btn btn-primary" @click="voltar()">Voltar</button>
+            <button class="btn btn-light" @click="voltar()">Limpar</button>
           </div>
         </div>
       </div>

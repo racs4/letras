@@ -20,8 +20,7 @@ new Vue({
     data() {
         return {
             contemLetra: false,
-            musica: 'Time',
-            artista: 'Pink Floyd',
+            musica: '',
             nomeMusica: '',
             nomeArtista: '',
             resposta: undefined,
