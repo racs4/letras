@@ -1,3 +1,6 @@
-# letras
+# Vaslyrics
 
-Pra instalar é só ativar modo desenvolvedor no navegador e carregar sem compactação
+Pra instalar: 
+Ative modo desenvolvedor no navegador e carregue a extensão sem compactação
+
+Esse projeto utiliza a [API do site Vagalume](https://api.vagalume.com.br/docs/)
